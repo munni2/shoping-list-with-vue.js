@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaning</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.4/css/bootstrap.css">
+</head>
+<body>
+	<style type="text/css">
+		.form-style{
+			width: 500px;
+			margin: 0 auto;
+			text-align: center;
+			padding-top: 20px;
+		}
+		h3{
+			text-align: center;
+		}
+		form{
+			padding-bottom: 20px;
+		}
+		li{
+			list-style-type: none;
+			border: 1px solid #ccc;
+			padding: 10px 0;
+		}
+		button{
+			padding: 3px 7px !important;
+		}
+	</style>
+	<div id="myApp">
+		<h3>Bazar List</h3>
+		<div class="form-style">
+			<form @submit.prevent="addItem">
+				<input class="from-control" v-model="newItem"><br>
+			</form>
+			<ul>
+				<li v-for="(item, index) in items"> 
+				 {{ item.name }} - <input class="from-control" v-model="item.price">
+				 <button class="btn btn-danger" @click="removeItem(index)">R</button>
+				</li>
+
+				<li>Total - {{ total }}</li>
+			</ul>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+	new Vue({
+		el: "#myApp",
+		data:{
+			items:[
+				{name: 'rice', price:12.50},
+				{name: 'mango', price:100.50},
+				{name: 'patato', price:150.50},
+			],
+			newItem: ''
+		},
+		computed: {
+			total(){
+				var total = 0
+				this.items.forEach(item => {
+					total += parseFloat(item.price)
+				}) 
+				return total
+			}
+		},
+		methods:{
+			addItem(){
+				this.items.push({
+					name: this.newItem,
+					price: 0.0
+				})
+			},
+			removeItem(index){
+				this.items.splice(index, 1)
+			}
+		}
+	});
+</script>
+</body>
+</html>
